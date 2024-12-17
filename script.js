@@ -1,16 +1,14 @@
 const productsContainer = document.getElementById("products-container");
 const loadingMessage = document.getElementById("loading-message");
 
-let id_start = 0; // ID de départ pour la pagination
-const productsPerPage = 24; // Nombre de produits par requête
+let id_start = 0; 
+const productsPerPage = 24; 
 let isLoading = false;
 
-// Fonction pour récupérer les produits
 async function fetchProducts() {
-    if (isLoading) return; // Empêche les requêtes simultanées
+    if (isLoading) return; 
     isLoading = true;
 
-    // Afficher le message de chargement
     loadingMessage.style.display = "block";
 
     try {
@@ -20,7 +18,6 @@ async function fetchProducts() {
         const data = await response.json();
         displayProducts(data.products);
 
-        // Met à jour l'ID de départ pour la page suivante
         id_start += productsPerPage;
     } catch (error) {
         console.error("Erreur :", error);
@@ -30,7 +27,6 @@ async function fetchProducts() {
     }
 }
 
-// Fonction pour afficher les produits dans le DOM
 function displayProducts(products) {
     products.forEach((product) => {
         const productCard = document.createElement("div");
@@ -45,15 +41,12 @@ function displayProducts(products) {
     });
 }
 
-// Fonction pour gérer le scroll infini
 function handleScroll() {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
         fetchProducts();
     }
 }
 
-// Ajouter l'écouteur d'événements pour le scroll
 window.addEventListener("scroll", handleScroll);
 
-// Chargement initial des produits
 fetchProducts();

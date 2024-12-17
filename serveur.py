@@ -24,7 +24,6 @@ def get_products():
     rows = cursor.fetchall()
     conn.close()
 
-    # Transformer les résultats en objets Product
     products = [
         Product(id=row[0], name=row[1], description=row[2], price=row[3], image_url=row[4]).to_dict()
         for row in rows
